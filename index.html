@@ -1,1 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobFinder - Job Opportunities</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    /* Navbar */
+    nav {
+      background: #1e3a8a;
+      color: white;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    nav ul li a:hover {
+      color: #bfdbfe;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      color: white;
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .search-box {
+      max-width: 850px;
+      margin: auto;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-box input,
+    .search-box select {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    .search-box button {
+      padding: 14px 25px;
+      border: none;
+      border-radius: 5px;
+      background: #f59e0b;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .search-box button:hover {
+      background: #d97706;
+    }
+
+    /* Jobs Section */
+    .container {
+      width: 85%;
+      max-width: 1200px;
+      margin: 50px auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      color: #1e3a8a;
+    }
+
+    .jobs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .job-card {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .job-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .job-card h3 {
+      color: #1e40af;
+      margin-bottom: 10px;
+    }
+
+    .company {
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .job-info {
+      margin: 8px 0;
+      color: #444;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      margin: 10px 5px 15px 0;
+    }
+
+    .apply-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background: #2563eb;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .apply-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* Footer */
+    footer {
+      background: #111827;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 60px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .jobs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav ul {
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .jobs {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">JobFinder</div>
+
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#jobs">Jobs</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Find Your Dream Job</h1>
+    <p>Discover thousands of job opportunities from top companies.</p>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Job title or keyword">
+
+      <select id="location">
+        <option value="">All Locations</option>
+        <option value="Chennai">Chennai</option>
+        <option value="Bangalore">Bangalore</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Mumbai">Mumbai</option>
+      </select>
+
+      <button onclick="searchJobs()">Search Jobs</button>
+    </div>
+  </section>
+
+  <!-- Jobs -->
+  <section class="container" id="jobs">
+
+    <div class="section-title">
+      <h2>Latest Job Opportunities</h2>
+      <p>Explore our latest openings</p>
+    </div>
+
+    <div class="jobs" id="jobList">
+
+      <!-- Job 1 -->
+      <div class="job-card" data-title="Frontend Developer" data-location="Chennai">
+        <h3>Frontend Developer</h3>
+        <p class="company">Tech Solutions Pvt Ltd</p>
+
+        <p class="job-info">📍 Chennai</p>
+        <p class="job-info">💰 ₹5 - ₹8 LPA</p>
+        <p class="job-info">💼 Full Time</p>
+
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+
+        <button class="apply-btn" onclick="applyJob('Frontend Developer')">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="job-card" data-title="Software Engineer" data-location="Bangalore">
+        <h3>Software Engineer</h3>
+        <p class="company">Innovate Technologies</p>
+
+        <p class="job-info">📍 Bangalore</p>
+        <p class="job-info">💰 ₹7 - ₹12 LPA</p>
+        <p class="job-info">💼 Full Time</p>
+
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+
+        <button class="apply-btn" onclick="applyJob('Software Engineer')">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Job 3 -->
+      <div class="job-card" data-title="UI UX Designer" data-location="Hyderabad">
+        <h3>UI/UX Designer</h3>
+        <p class="company">Creative Studio</p>
+
+        <p class="job-info">📍 Hyderabad</p>
+        <p class="job-info">💰 ₹4 - ₹7 LPA</p>
+        <p class="job-info">💼 Full Time</p>
+
+        <span class="tag">Figma</span>
+        <span class="tag">UI Design</span>
+        <span class="tag">UX</span>
+
+        <button class="apply-btn" onclick="applyJob('UI/UX Designer')">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Job 4 -->
+      <div class="job-card" data-title="Data Analyst" data-location="Mumbai">
+        <h3>Data Analyst</h3>
+        <p class="company">DataWorks India</p>
+
+        <p class="job-info">📍 Mumbai</p>
+        <p class="job-info">💰 ₹6 - ₹10 LPA</p>
+        <p class="job-info">💼 Full Time</p>
+
+        <span class="tag">Excel</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Power BI</span>
+
+        <button class="apply-btn" onclick="applyJob('Data Analyst')">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Job 5 -->
+      <div class="job-card" data-title="Digital Marketing Executive" data-location="Chennai">
+        <h3>Digital Marketing Executive</h3>
+        <p class="company">MarketPro</p>
+
+        <p class="job-info">📍 Chennai</p>
+        <p class="job-info">💰 ₹3 - ₹5 LPA</p>
+        <p class="job-info">💼 Full Time</p>
+
+        <span class="tag">SEO</span>
+        <span class="tag">Google Ads</span>
+        <span class="tag">Social Media</span>
+
+        <button class="apply-btn" onclick="applyJob('Digital Marketing Executive')">
+          Apply Now
+        </button>
+      </div>
+
+      <!-- Job 6 -->
+      <div class="job-card" data-title="Backend Developer" data-location="Bangalore">
+        <h3>Backend Developer</h3>
+        <p class="company">Cloud Systems</p>
+
+        <p class="job-info">📍 Bangalore</p>
+        <p class="job-info">💰 ₹6 - ₹11 LPA</p>
+        <p class="job-info">💼 Full Time</p>
+
+        <span class="tag">Node.js</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">API</span>
+
+        <button class="apply-btn" onclick="applyJob('Backend Developer')">
+          Apply Now
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="container" id="about">
+    <div class="section-title">
+      <h2>About JobFinder</h2>
+      <p>
+        JobFinder helps job seekers discover career opportunities
+        and connect with companies looking for talented professionals.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <p>© 2026 JobFinder. All Rights Reserved.</p>
+    <p>Email: careers@jobfinder.com</p>
+  </footer>
+
+  <script>
+
+    // Search jobs
+    function searchJobs() {
+
+      const keyword =
+        document.getElementById("searchInput").value.toLowerCase();
+
+      const location =
+        document.getElementById("location").value.toLowerCase();
+
+      const jobs =
+        document.querySelectorAll(".job-card");
+
+      jobs.forEach(job => {
+
+        const title =
+          job.dataset.title.toLowerCase();
+
+        const jobLocation =
+          job.dataset.location.toLowerCase();
+
+        const titleMatch =
+          title.includes(keyword);
+
+        const locationMatch =
+          location === "" || jobLocation === location;
+
+        if (titleMatch && locationMatch) {
+          job.style.display = "block";
+        } else {
+          job.style.display = "none";
+        }
+
+      });
+    }
+
+    // Apply button
+    function applyJob(jobTitle) {
+      alert(
+        "Thank you for your interest in the " +
+        jobTitle +
+        " position! Your application process will begin soon."
+      );
+    }
+
+  </script>
+
+</body>
+</html>
 
